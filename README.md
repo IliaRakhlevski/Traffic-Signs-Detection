@@ -19,4 +19,4 @@
 * *Run Results.html* - results of model creation, training and testing.<br/>
 
 See the document *"Deep Learning for Large-Scale Traffic-Sign Detection and Recognition - Report.pdf"* <br/>
-the part "Traffic Signs Recognition Project" for the project implementation details.<br/>
+the part *"Traffic Signs Recognition Project"* for the project implementation details.<br/>
