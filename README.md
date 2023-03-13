@@ -1,4 +1,6 @@
 # Traffic Signs Detection
+## Course: Selected Topics In Intelligent Systems 1
+### Topic: Intelligent transportation systems
 
 Implementation of traffic-sign detection and recognition using Mask R-CNN network.<br/>
 
