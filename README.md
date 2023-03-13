@@ -7,7 +7,7 @@ Dataset: DFG Traffic Sign Dataset - traffic signs images in JPEG format.<br/>
 Programming Language: Python 3.<br/>
 Technologies/Methods: Mask R-CNN (mrcnn 0.2).<br/>
 Software: Spyder 3.3.6 / IPython 7.8.0 – development environment.<br/>
-&emsp;&emsp;VGG Image Annotator - an image annotation tool that can be used to
+&emsp;&emsp;VGG Image Annotator - an image annotation tool that can be used to<br/>
 &emsp;&emsp;define regions in an image and create textual descriptions of those regions.
 
 Content:<br/>
