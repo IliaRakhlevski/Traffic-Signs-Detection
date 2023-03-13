@@ -1,7 +1,5 @@
 # Traffic Signs Detection And Recognition
-## AFEKA - Tel-Aviv Academic College Of Engineering
-## Department: Intelligent Systems
-## Course: Selected Topics In Intelligent Systems 1
+## AFEKA - Tel-Aviv Academic College Of Engineering<br/>Department: Intelligent Systems<br/>Course: Selected Topics In Intelligent Systems 1
 ### Topic: Intelligent transportation systems
 
 Course project: Implementation of traffic-sign detection and recognition using Mask R-CNN network.<br/>
