@@ -2,15 +2,15 @@
 ## AFEKA - Tel-Aviv Academic College Of Engineering<br/>Department: Intelligent Systems<br/>Course: Selected Topics In Intelligent Systems 1
 ### Topic: Intelligent transportation systems
 
-Course project: Implementation of traffic-sign detection and recognition using Mask R-CNN network.<br/>
-Dataset: DFG Traffic Sign Dataset - traffic signs images in JPEG format.<br/>
-Programming Language: Python 3.<br/>
-Technologies/Methods: Mask R-CNN (mrcnn 0.2).<br/>
-Software: Spyder 3.3.6 / IPython 7.8.0 – development environment.<br/>
+**Course project:** Implementation of traffic-sign detection and recognition using Mask R-CNN network.<br/>
+**Dataset:** DFG Traffic Sign Dataset - traffic signs images in JPEG format.<br/>
+**Programming Language:** Python 3.<br/>
+**Technologies/Methods:** Mask R-CNN (mrcnn 0.2).<br/>
+**Software:** Spyder 3.3.6 / IPython 7.8.0 – development environment.<br/>
 &emsp;&emsp;VGG Image Annotator - an image annotation tool that can be used to<br/>
 &emsp;&emsp;define regions in an image and create textual descriptions of those regions.
 
-Content:<br/>
+**Content:**<br/>
 Deep Learning for Large-Scale Traffic-Sign Detection and Recognition.pdf - project article.<br/>
 Deep Learning for Large-Scale Traffic-Sign Detection and Recognition - Presentation.pptx - project presentation.<br/>
 Deep Learning for Large-Scale Traffic-Sign Detection and Recognition - Report.pdf - project report.<br/>
