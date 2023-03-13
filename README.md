@@ -10,7 +10,7 @@
 &emsp;&emsp;VGG Image Annotator - an image annotation tool that can be used to<br/>
 &emsp;&emsp;define regions in an image and create textual descriptions of those regions.
 
-**Content:**<br/>
+**Project files:**<br/>
 * *Deep Learning for Large-Scale Traffic-Sign Detection and Recognition.pdf* - project article.<br/>
 * *Deep Learning for Large-Scale Traffic-Sign Detection and Recognition - Presentation.pptx* - project presentation.<br/>
 * *Deep Learning for Large-Scale Traffic-Sign Detection and Recognition - Report.pdf* - project report.<br/>
