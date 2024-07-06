@@ -3,6 +3,7 @@
 ### Topic: Intelligent transportation systems
 
 **Course project:** Implementation of traffic-sign detection and recognition using Mask R-CNN network.<br/>
+**Project Completion Date:** 2021<br/>
 **Dataset:** DFG Traffic Sign Dataset - traffic signs images in JPEG format.<br/>
 **Programming Language:** Python 3.<br/>
 **Technologies/Methods:** Mask R-CNN (mrcnn 0.2).<br/>
