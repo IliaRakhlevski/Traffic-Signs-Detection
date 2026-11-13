@@ -11,7 +11,77 @@
 &emsp;&emsp;VGG Image Annotator - an image annotation tool that can be used to<br/>
 &emsp;&emsp;define regions in an image and create textual descriptions of those regions.
 
-**Project files:**<br/>
+![Detection example](docs/images/result_nostop_bike.png)
+
+## Data
+
+Five sign classes were selected from the DFG Traffic Sign Dataset and annotated manually
+with polygon masks in VGG Image Annotator (exported to COCO format).
+
+| Class | Train instances | Val instances |
+|---|---:|---:|
+| Yield | 14 | 6 |
+| Direction | 15 | 8 |
+| No Stop | 12 | 8 |
+| Bike | 13 | 8 |
+| Pedestrians | 16 | 6 |
+| **Total** | **70** (62 images) | **36** (31 images) |
+
+A separate set of 23 unannotated images (`datasets/traffic_signs/real_test`) was used for visual testing.
+Images were resized to 768×448.
+
+Example of a training image with its ground-truth mask:
+
+![Training sample](docs/images/training_sample_mask.png)
+
+## Training
+
+- Model: Mask R-CNN, ResNet-50 backbone, initialized from MS COCO weights.
+- Stage 1: network heads only, 4 epochs × 500 steps, learning rate 0.001.
+- Stage 2: all layers, 4 more epochs × 500 steps, learning rate 0.0001.
+- Batch size 1, trained on CPU: about 124 min for stage 1 and 182 min for stage 2.
+- Detection confidence threshold at inference: 0.85.
+
+Loss per epoch (taken from `Run Results.html`):
+
+| Epoch | Layers | Train loss | Val loss |
+|---:|---|---:|---:|
+| 1 | heads | 1.026 | 1.535 |
+| 2 | heads | 0.320 | 0.591 |
+| 3 | heads | 0.188 | 1.046 |
+| 4 | heads | 0.135 | 0.464 |
+| 5 | all | 0.070 | 1.036 |
+| 6 | all | 0.060 | 0.567 |
+| 7 | all | 0.052 | 9.372 |
+| 8 | all | 0.049 | 0.901 |
+
+Training loss decreases steadily. Validation loss is noisy because only 5 validation steps
+are evaluated per epoch (`VALIDATION_STEPS = 5`), which also explains the spike at epoch 7. The gap between training and validation loss indicates overfitting,
+which is expected with 62 training images.
+
+## Results
+
+Examples of detections on the test images (class name and confidence score):
+
+| | |
+|:---:|:---:|
+| ![Direction and Yield](docs/images/result_direction_yield.png) | ![Pedestrians](docs/images/result_pedestrians.png) |
+| ![Yield](docs/images/result_yield.png) | ![Bike](docs/images/result_bike.png) |
+
+Signs from the five trained classes were detected with confidence scores of about 0.98–0.99.
+
+Known errors:
+- Some signs that do not belong to the five trained classes are detected as one of them.
+- Very small signs are not detected.
+- Some masks extend beyond the sign, for example:
+
+![Error example](docs/images/result_error_example.png)
+
+**Limitations.** mAP was not computed: the test images have no ground-truth annotations,
+and the validation set is too small for a reliable number. To compute mAP, annotate the
+`real_test` images and evaluate them with `mrcnn.utils.compute_ap`.
+
+## Project files
 * *Deep Learning for Large-Scale Traffic-Sign Detection and Recognition.pdf* - project article.<br/>
 * *Deep Learning for Large-Scale Traffic-Sign Detection and Recognition - Presentation.pptx* - project presentation.<br/>
 * *Deep Learning for Large-Scale Traffic-Sign Detection and Recognition - Report.pdf* - project report.<br/>
