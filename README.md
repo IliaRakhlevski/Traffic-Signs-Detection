@@ -81,6 +81,27 @@ Known errors:
 and the validation set is too small for a reliable number. To compute mAP, annotate the
 `real_test` images and evaluate them with `mrcnn.utils.compute_ap`.
 
+## Lessons learned
+
+The model architecture was taken off the shelf; most of the work, and most of the
+remaining problems, are in the data:
+
+- **Annotation matters more than the model.** All 106 sign instances were annotated
+  manually with polygon masks in VGG Image Annotator. Consistent annotation rules
+  (what counts as a sign, how to handle partly hidden signs) directly affect mask quality.
+- **Negative examples are needed.** Signs outside the five trained classes were often
+  detected as one of them, because the training set contained almost no other signs.
+  Adding images with other signs labeled as background would reduce these false positives.
+- **Small objects need dedicated data.** Very small signs were missed. The training set
+  should include more distant signs, or images should be processed at a higher resolution.
+- **Evaluation needs annotated test data.** The test images were checked visually only,
+  so no mAP could be reported. The validation loss was also noisy because only
+  5 validation steps were run per epoch. A small annotated test set would give a
+  reliable metric.
+- **62 training images are enough for a proof of concept, not for production.**
+  Training loss kept falling while validation loss did not, which is a sign of overfitting.
+  More data and augmentation (brightness, blur, scale) would be the next step.
+
 ## How to run
 
 ```bash
