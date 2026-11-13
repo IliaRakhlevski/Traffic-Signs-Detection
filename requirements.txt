@@ -1,0 +1,9 @@
+# Versions used in 2021 (Python 3.7). TensorFlow 1.x is required by mrcnn 0.2.
+tensorflow==1.15.0
+keras==2.2.5
+mrcnn==0.2
+numpy<1.19
+scikit-image
+pillow
+opencv-python
+h5py<3.0

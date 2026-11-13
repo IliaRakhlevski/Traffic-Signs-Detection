@@ -1,0 +1,9 @@
+# Training outputs and downloaded weights
+logs/
+*.h5
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.spyproject/

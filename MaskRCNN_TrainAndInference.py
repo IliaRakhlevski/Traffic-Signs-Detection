@@ -1,5 +1,8 @@
-# Creation, training and testing the model 
+# Creation, training and testing the model
 # for detection/recognition traffic signs
+#
+# Based on the Matterport Mask R-CNN library (https://github.com/matterport/Mask_RCNN)
+# and the Immersive Limbo tutorial on training Mask R-CNN on a custom COCO-like dataset.
 
 import os
 import sys
@@ -13,9 +16,13 @@ PROC_IMAGE_MIN_DIM = 448
 PROC_IMAGE_MAX_DIM = 768
 
 
-# Set the ROOT_DIR variable to the root directory of the Mask_RCNN git repo
-ROOT_DIR = '../../TrafficSignsRecognition_Mask_RCNN'
-assert os.path.exists(ROOT_DIR), 'ROOT_DIR does not exist. Did you forget to read the instructions above? ;)'
+REPO_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(REPO_DIR, 'datasets', 'traffic_signs')
+
+# Directory for logs, trained models and COCO weights.
+# Set MASK_RCNN_DIR to the Mask_RCNN repo root if mrcnn is not pip-installed.
+ROOT_DIR = os.environ.get('MASK_RCNN_DIR', REPO_DIR)
+assert os.path.exists(ROOT_DIR), 'ROOT_DIR does not exist: {}'.format(ROOT_DIR)
 
 # Import mrcnn libraries
 sys.path.append(ROOT_DIR) 
@@ -25,8 +32,8 @@ from mrcnn import visualize
 import mrcnn.model as modellib
 
 
-# Set CPU/GPU for training/testing 
-# num_cores - nimber of cores/processors
+# Set CPU/GPU for training/testing
+# num_cores - number of cores/processors
 # CPU - indicates if CPU or GPU must be set
 def set_cpu_gpu(num_cores, CPU = False):
     
@@ -48,7 +55,8 @@ def set_cpu_gpu(num_cores, CPU = False):
 
 
 
-set_cpu_gpu(6, True)
+# The model was trained on CPU (6 cores). Pass CPU=False to use a GPU.
+set_cpu_gpu(6, CPU=True)
 
 
 # Directory to save logs and trained model
@@ -63,9 +71,9 @@ if not os.path.exists(COCO_MODEL_PATH):
     
 
 class TrafficSignsConfig(Config):
-    """Configuration for training on the cigarette butts dataset.
+    """Configuration for training on the traffic signs dataset.
     Derives from the base Config class and overrides values specific
-    to the cigarette butts dataset.
+    to the traffic signs dataset.
     """
     # Give the configuration a recognizable name
     NAME = "traffic_signs"
@@ -75,9 +83,9 @@ class TrafficSignsConfig(Config):
     IMAGES_PER_GPU = 1
 
     # Number of classes (including background)
-    NUM_CLASSES = 1 + NUM_CLASSES  # background + 1 (traffic_signs)
+    NUM_CLASSES = 1 + NUM_CLASSES  # background + 5 traffic sign classes
 
-    # All of our training images are 512x512
+    # All of our training images are 768x448
     IMAGE_MIN_DIM = PROC_IMAGE_MIN_DIM
     IMAGE_MAX_DIM = PROC_IMAGE_MAX_DIM
 
@@ -88,15 +96,18 @@ class TrafficSignsConfig(Config):
     # on saved models (in the MODEL_DIR), try making this value larger.
     VALIDATION_STEPS = 5
     
-    # Matterport originally used resnet101, but I downsized to fit it on my graphics card
+    # ResNet-50 instead of the default ResNet-101: faster and lighter on CPU
     BACKBONE = 'resnet50'
 
-    # To be honest, I haven't taken the time to figure out what these do
+    # Small anchors, since traffic signs occupy a small part of the image
     RPN_ANCHOR_SCALES = (8, 16, 32, 64, 128)
+    # Number of RoIs per image fed to the classifier/mask heads during training
     TRAIN_ROIS_PER_IMAGE = 32
-    MAX_GT_INSTANCES = 50 
-    POST_NMS_ROIS_INFERENCE = 500 
-    POST_NMS_ROIS_TRAINING = 1000 
+    # Maximum number of ground-truth instances per image
+    MAX_GT_INSTANCES = 50
+    # Number of RoIs kept after non-maximum suppression
+    POST_NMS_ROIS_INFERENCE = 500
+    POST_NMS_ROIS_TRAINING = 1000
     
 config = TrafficSignsConfig()
 config.display()
@@ -149,7 +160,8 @@ class CocoLikeDataset(utils.Dataset):
                     image_height = image['height']
                 except KeyError as key:
                     print("Warning: Skipping image (id: {}) with missing key: {}".format(image_id, key))
-                
+                    continue
+
                 image_path = os.path.abspath(os.path.join(images_dir, image_file_name))
                 image_annotations = annotations[image_id]
                 
@@ -195,11 +207,13 @@ class CocoLikeDataset(utils.Dataset):
     
     
 dataset_train = CocoLikeDataset()
-dataset_train.load_data('../datasets/traffic_signs/train/coco_annotations.json', '../datasets/traffic_signs/train/images')
+dataset_train.load_data(os.path.join(DATA_DIR, 'train', 'coco_annotations.json'),
+                        os.path.join(DATA_DIR, 'train', 'images'))
 dataset_train.prepare()
 
 dataset_val = CocoLikeDataset()
-dataset_val.load_data('../datasets/traffic_signs/val/coco_annotations.json', '../datasets/traffic_signs/val/images')
+dataset_val.load_data(os.path.join(DATA_DIR, 'val', 'coco_annotations.json'),
+                      os.path.join(DATA_DIR, 'val', 'images'))
 dataset_val.prepare()
 
 
@@ -287,7 +301,7 @@ print("Loading weights from ", model_path)
 model.load_weights(model_path, by_name=True)
 
 import skimage
-real_test_dir = '../datasets/traffic_signs/real_test/'
+real_test_dir = os.path.join(DATA_DIR, 'real_test')
 image_paths = []
 for filename in os.listdir(real_test_dir):
     if os.path.splitext(filename)[1].lower() in ['.png', '.jpg', '.jpeg']:

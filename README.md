@@ -81,9 +81,22 @@ Known errors:
 and the validation set is too small for a reliable number. To compute mAP, annotate the
 `real_test` images and evaluate them with `mrcnn.utils.compute_ap`.
 
+## How to run
+
+```bash
+pip install -r requirements.txt
+python MaskRCNN_TrainAndInference.py
+```
+
+Requires Python 3.7 and TensorFlow 1.x (mrcnn 0.2 does not support TensorFlow 2).
+COCO weights (`mask_rcnn_coco.h5`) are downloaded automatically on the first run.
+Logs and trained models are saved to `logs/`. Set the `MASK_RCNN_DIR` environment
+variable to keep them in another folder.
+
 ## Project files
-* *Deep Learning for Large-Scale Traffic-Sign Detection and Recognition.pdf* - project article.<br/>
-* *Deep Learning for Large-Scale Traffic-Sign Detection and Recognition - Presentation.pptx* - project presentation.<br/>
+* *Deep Learning for Large-Scale Traffic-Sign Detection and Recognition - Presentation.pptx* - seminar presentation reviewing the article
+  [Deep Learning for Large-Scale Traffic-Sign Detection and Recognition](https://arxiv.org/abs/1904.00649)
+  (D. Tabernik, D. Skočaj, IEEE Transactions on Intelligent Transportation Systems).<br/>
 * *Deep Learning for Large-Scale Traffic-Sign Detection and Recognition - Report.pdf* - project report.<br/>
 * *resize_images.py* - Python code for images resizing.<br/>
 * *MaskRCNN_TrainAndInference.py* - Python code for creation/training/testing of the model.<br/>
@@ -91,3 +104,14 @@ and the validation set is too small for a reliable number. To compute mAP, annot
 
 See the document *"Deep Learning for Large-Scale Traffic-Sign Detection and Recognition - Report.pdf"* <br/>
 the part *"Traffic Signs Recognition Project"* for the project implementation details.<br/>
+
+## Credits and license
+
+- Images are from the [DFG Traffic Sign Dataset](https://www.vicos.si/resources/dfg/)
+  (D. Tabernik, D. Skočaj), licensed under
+  [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+  The images and annotations in `datasets/` are distributed under the same license.
+- Model implementation: [Matterport Mask R-CNN](https://github.com/matterport/Mask_RCNN) (MIT license).
+- The training script is adapted from the Immersive Limbo tutorial on training Mask R-CNN
+  on a custom COCO-like dataset.
+- The code in this repository is licensed under the [MIT License](LICENSE).
