@@ -1,9 +1,8 @@
 # Traffic Signs Detection And Recognition
-## AFEKA - Tel-Aviv Academic College Of Engineering<br/>Department: Intelligent Systems<br/>Course: Selected Topics In Intelligent Systems 1
+*Course project · Selected Topics in Intelligent Systems 1 · [Afeka Tel Aviv Academic College of Engineering](https://www.afeka.ac.il/) · 2021*
 ### Topic: Intelligent transportation systems
 
-**Course project:** Implementation of traffic-sign detection and recognition using Mask R-CNN network.<br/>
-**Project Completion Date:** 2021<br/>
+Implementation of traffic-sign detection and recognition using Mask R-CNN network.<br/>
 **Dataset:** DFG Traffic Sign Dataset - traffic signs images in JPEG format.<br/>
 **Programming Language:** Python 3.<br/>
 **Technologies/Methods:** Mask R-CNN (mrcnn 0.2).<br/>
